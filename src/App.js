@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import MainPage from './components/mainPage';
+import { simpanData } from './actions';
+import { store } from './index.js';
+import { urlSatu } from './utils/url';
 
-function App() {
+const App = () => {
+
+  useEffect(() => {
+    fetch(`${urlSatu}/provinsi`, {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(data => {
+        store.dispatch(simpanData(data.provinsi))
+      });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainPage />
     </div>
-  );
+  )
 }
 
 export default App;
